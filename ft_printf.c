@@ -1,14 +1,54 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ichaiq <ichaiq@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 23:19:56 by ichaiq            #+#    #+#             */
+/*   Updated: 2022/11/14 12:42:48 by ichaiq           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stddef.h>
 #include <stdarg.h>
 #include "libft.h"
 #include "libftprintf.h"
 
-int ft_printf(const char *str, ...)
+void	ft_format(const char *str, va_list arg, int *len, int *i)
 {
-	int     i;
-	va_list arg;
-	char    *s;
-	int     len;
+	if (str[*i + 1] == '%')
+		ft_putchar('%', len, i);
+	else if (str[*i + 1] == 'c')
+		ft_putchar(va_arg(arg, int), len, i);
+	else if (str[*i + 1] == 's')
+		ft_putstr(va_arg(arg, void *), len, i);
+	else if (str[*i + 1] == 'p')
+	{
+		ft_putstr("0x", len, 0);
+		ft_putnbr_base2(va_arg(arg, long), 16, len, *i = *i + 2, 'x');
+	}
+	else if (str[*i + 1] == 'u')
+		ft_putnbr_base2((unsigned long)va_arg(arg, unsigned long), 10,
+			len, *i = *i + 2, 'l');
+	else if (str[*i + 1] == 'i')
+		ft_putnbr_base2(va_arg(arg, int), 10, len, *i = *i + 2, 'x');
+	else if (str[*i + 1] == 'd')
+		ft_putnbr_base2(va_arg(arg, int), 10, len, *i = *i + 2, 'x');
+	else if (str[*i + 1] == 'X' || str[*i + 1] == 'x')
+		ft_putnbr_base2(va_arg(arg, unsigned int), 16,
+			len, *i = *i + 2, str[*i + 1]);
+	else if (str[*i + 1] == '\0')
+		ft_printchar((void *)&str[*i], len);
+	else
+		ft_putchar(str[*i + 1], len, i);
+}
+
+int	ft_printf(const char *str, ...)
+{
+	int		i;
+	va_list	arg;
+	int		len;
 	int		e;
 
 	i = 0;
@@ -19,38 +59,13 @@ int ft_printf(const char *str, ...)
 	{
 		if (str[i] == '%')
 		{
-			if (str[i + 1] == '%')
-				ft_putchar('%', &len, &i);
-			else if (str[i + 1] == 'c')
-				ft_putchar(va_arg(arg, int), &len, &i);
-			else if (str[i + 1] == 's')
-				ft_putstr(va_arg(arg, void *), &len, &i);
-			else if (str[i + 1] == 'p')
-			{
-				ft_putstr("0x",&len,0);
-				ft_putadrr_base(va_arg(arg, unsigned long), 16, &len, i = i + 2, 'l');
-			}
-			else if (str[i + 1] == 'u')
-				ft_putnbr_base(va_arg(arg,unsigned int), 10, &len, i = i + 2,'l');
-			else if (str[i + 1] == 'i')
-				ft_putnbr_base(va_arg(arg, int), 10, &len, i = i + 2, 'l');
-			else if (str[i + 1] == 'd')
-				ft_putnbr_base(va_arg(arg,long), 10, &len, i = i + 2, 'l');
-			else if (str[i + 1] == 'X')
-				ft_putnbr_base2(va_arg(arg, int), 16, &len, i = i + 2,'u');
-			else if (str[i + 1] == 'x')
-				ft_putnbr_base2(va_arg(arg, int), 16, &len, i = i + 2,'l');
-			else if (str[i + 1] == 'x')
-				ft_putnbr_base(va_arg(arg, int), 16, &len, i = i + 2,'l');
-		
+			if (!str[i + 1])
+				return (len);
+			ft_format(str, arg, &len, &i);
 		}
-		if (str[i])
-		{
-			e = write(1, &str[i++], 1);
-			len = len + 1;
-			if (e == -1)
+		else
+			if (str[i] && ft_printchar(((void *)&str[i++]), &len) == -1)
 				return (-1);
-		}
 	}
 	return (len);
 }
@@ -67,10 +82,10 @@ int main()
 	// printf("le : %d",le);
 	// printf(s,c);
 	char *s = ft_strdup("adress :%d\n");
-	char *p = ft_strdup("allo allo cha3lo `&é\n cha3lo niran %");
-	double x = 48484;
-	int len = ft_printf(s,p);
-	int len2 = printf(s,p);
+	char *p = ft_strdup("test test");
+	// double x = 48484;
+	int len = ft_printf("\nthis %X number\naa", p);
+	int len2 = printf("\nthis %X number\naa", p);
 	printf("\nlen : %d | len2 : %d",len,len2);
 
 }

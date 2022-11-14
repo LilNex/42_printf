@@ -1,6 +1,11 @@
 {
     "files.associations": {
         "libft.h": "c",
-        "libftprintf.h": "c"
+        "libftprintf.h": "c",
+        "stddef.h": "c",
+        "ft_printf.h": "c",
+        "stdarg.h": "c",
+        "unistd.h": "c",
+        "stdio.h": "c"
     }
 }
