@@ -48,12 +48,11 @@ int	ft_printchar(void *c, int *len)
 	return (1);
 }
 
-void	ft_putnbr_base2(long nbr, int base, int *len, int i, char c)
+void	ft_putnbr_base2(long nbr, int base, int *len, int i, int c)
 {
 	char	*set;
 
 	(void)i;
-	printf("char : %c\n",c);
 	if (c == 'X')
 		set = "0123456789ABCDEF";
 	else

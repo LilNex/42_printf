@@ -17,6 +17,8 @@
 
 void	ft_format(const char *str, va_list arg, int *len, int *i)
 {
+	int	x;
+
 	if (str[*i + 1] == '%')
 		ft_putchar('%', len, i);
 	else if (str[*i + 1] == 'c')
@@ -31,13 +33,14 @@ void	ft_format(const char *str, va_list arg, int *len, int *i)
 	else if (str[*i + 1] == 'u')
 		ft_putnbr_base2((unsigned long)va_arg(arg, unsigned long), 10,
 			len, *i = *i + 2, 'l');
-	else if (str[*i + 1] == 'i')
-		ft_putnbr_base2(va_arg(arg, int), 10, len, *i = *i + 2, 'x');
-	else if (str[*i + 1] == 'd')
+	else if (str[*i + 1] == 'i' || str[*i + 1] == 'd')
 		ft_putnbr_base2(va_arg(arg, int), 10, len, *i = *i + 2, 'x');
 	else if (str[*i + 1] == 'X' || str[*i + 1] == 'x')
+	{
+		x = (int)str[*i + 1];
 		ft_putnbr_base2(va_arg(arg, unsigned int), 16,
-			len, *i = *i + 2, str[*i + 1]);
+			len, (*i = *i + 2), x);
+	}
 	else if (str[*i + 1] == '\0')
 		ft_printchar((void *)&str[*i], len);
 	else
@@ -47,8 +50,8 @@ void	ft_format(const char *str, va_list arg, int *len, int *i)
 int	ft_printf(const char *str, ...)
 {
 	int		i;
-	va_list	arg;
 	int		len;
+	va_list	arg;
 	int		e;
 
 	i = 0;
@@ -70,22 +73,22 @@ int	ft_printf(const char *str, ...)
 	return (len);
 }
 
-int main()
-{
-	// char s[]="hel%%lo %s world\n";
-	// char c[]="zbi";
-	// char car = 'z';
-	// int len = ft_printf(s,c);
-	// int le = printf(s,c);
-	// printf("----------------------\n");
-	// printf("len : %d",len);
-	// printf("le : %d",le);
-	// printf(s,c);
-	char *s = ft_strdup("adress :%d\n");
-	char *p = ft_strdup("test test");
-	// double x = 48484;
-	int len = ft_printf("\nthis %X number\naa", p);
-	int len2 = printf("\nthis %X number\naa", p);
-	printf("\nlen : %d | len2 : %d",len,len2);
+// int main()
+// {
+// 	// char s[]="hel%%lo %s world\n";
+// 	// char c[]="zbi";
+// 	// char car = 'z';
+// 	// int len = ft_printf(s,c);
+// 	// int le = printf(s,c);
+// 	// printf("----------------------\n");
+// 	// printf("len : %d",len);
+// 	// printf("le : %d",le);
+// 	// printf(s,c);
+// 	char *s = ft_strdup("adress :%d\n");
+// 	char *p = ft_strdup("test test");
+// 	// double x = 48484;
+// 	int len = ft_printf("\nthis %X number\naa", (unsigned int)p);
+// 	int len2 = printf("\nthis %X num% ber\naa", (unsigned int)p);
+// 	printf("\nlen : %d | len2 : %d",len,len2);
 
-}
+// }
