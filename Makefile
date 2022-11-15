@@ -1,6 +1,6 @@
 
 NAME = libftprintf.a
-HDRS = libftprintf.h
+HDRS = ft_printf.h
 SOURCES = \
 	ft_printf.c ft_utils.c ft_utils2.c \
 

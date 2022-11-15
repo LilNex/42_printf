@@ -1,5 +1,31 @@
-# include "libftprintf.h"
-# include "libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_utils2.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ichaiq <ichaiq@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/14 10:25:11 by ichaiq            #+#    #+#             */
+/*   Updated: 2022/11/15 15:15:41 by ichaiq           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "ft_printf.h"
+
+size_t	ft_strlen(const char *c)
+{
+	size_t	i;
+
+	i = 0;
+	while (c[i] != '\0')
+		i++;
+	return (i);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	while (n-- > 0)
+		*(char *)(s++) = 0;
+}
 
 void	*ft_calloc(size_t count, size_t size)
 {
@@ -39,35 +65,10 @@ char	*ft_strdup(const char *s1)
 	return (new - len);
 }	
 
-
 int	ft_printchar(void *c, int *len)
 {
 	if (write(1, c, 1) == -1)
 		return (-1);
 	(*len)++;
 	return (1);
-}
-
-void	ft_putnbr_base2(long nbr, int base, int *len, int i, int c)
-{
-	char	*set;
-
-	(void)i;
-	if (c == 'X')
-		set = "0123456789ABCDEF";
-	else
-		set = "0123456789abcdef";
-
-	if (nbr < 0)
-	{
-		nbr *= (-1);
-		ft_printchar("-", len);
-	}
-	if (nbr >= base)
-	{
-		ft_putnbr_base2(nbr / base, base, len, i, c);
-		ft_printchar(&(set[nbr % base]), len);
-	}
-	else
-		ft_printchar(&(set[nbr % base]), len);
 }

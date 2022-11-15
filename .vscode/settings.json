@@ -6,6 +6,13 @@
         "ft_printf.h": "c",
         "stdarg.h": "c",
         "unistd.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "__config": "c",
+        "stdint.h": "c",
+        "stdlib.h": "c",
+        "bitset": "c",
+        "functional": "c",
+        "iterator": "c",
+        "memory": "c"
     }
 }
