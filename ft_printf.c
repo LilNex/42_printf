@@ -63,5 +63,6 @@ int	ft_printf(const char *str, ...)
 			if (str[i] && ft_printchar(((void *)&str[i++]), &len) == -1)
 				return (-1);
 	}
+	va_end(arg);
 	return (len);
 }

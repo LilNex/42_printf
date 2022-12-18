@@ -1,3 +1,14 @@
+# ************************************************************************** #
+#                                                                            #
+#                                                        :::      ::::::::   #
+#   Makefile                                           :+:      :+:    :+:   #
+#                                                    +:+ +:+         +:+     #
+#   By: ichaiq <ichaiq@student.42.fr>              +#+  +:+       +#+        #
+#                                                +#+#+#+#+#+   +#+           #
+#   Created: 2022/11/13 15:46:25 by ichaiq            #+#    #+#             #
+#   Updated: 2022/11/15 23:31:41 by ichaiq           ###   ########.fr       #
+#                                                                            #
+# ************************************************************************** #
 
 NAME = libftprintf.a
 HDRS = ft_printf.h
@@ -28,4 +39,4 @@ fclean: clean
 
 re: fclean all bonus
 
-.PHONY: all bonus clean fclean re%
+.PHONY: all bonus clean fclean re
